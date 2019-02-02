@@ -2,6 +2,19 @@
 const anchors = document.querySelectorAll('a');
 console.log(anchors);
 
+//   NEED to fix LESS file for hover effect to work
+// will add   align-content: center;    to .nav
+//         const nav = document.getElementsByTagName('nav');   // NOT NICE
+
+// NOTE !!!   TARGETTING CSS  will not impact LESS compiler
+// added class ignored !!!!          INTERESTING !!!!
+/*const nav = document.querySelector('nav');
+
+console.log('this is nav  ', nav);
+console.log('this is navClassList ', nav.classList );
+nav.classList.add('align-content');
+nav.setAttribute('align-content', 'center');
+*/
 
 // hover effect
 anchors.forEach(a => {
@@ -18,7 +31,9 @@ anchors.forEach(a => {
 
 
 // change background to random 'nice' color OR toggle this!!!
+// NOTE !!!!   closure not working inside ev, going global ;(
 
+/*
 let toggleClosure = () => {
   let state = true;
 
@@ -33,18 +48,85 @@ let toggleClosure = () => {
 let toggler = toggleClosure();
 console.log('t first ', toggler());
 console.log('t second', toggler());
-
+*/
 const body = document.querySelector('body');
 console.log(body);
 
 let state = true;
 
+
 body.addEventListener('dblclick',
   ev => {
+  console.log('dblclick on document invoked, here is event ', ev);
    state ? body.style.backgroundColor = 'yellow'
                : body.style.backgroundColor = 'pink';
 
    state = !state;
-
   }
 );
+
+// making resize happen
+//const funBus_h1 = document.getElementsByTagName('h1');
+let count_resize = 0;
+
+const funBus_h1 = document.querySelector('h1');
+const daWindow = document.querySelector('window');
+console.log('this s funBus', daWindow );
+
+window.addEventListener('resize', ev => {
+  count_resize++;
+  console.log(' resize on widow triggered ', daWindow );
+  funBus_h1.textContent = `Fun Bus ${count_resize} resizes! `;
+  // add setTimeOut to restore as extra STRETCH
+
+});
+
+
+/*   // DEBUGGING, verifying bubbling concept
+funBus_h1.addEventListener('dblclick', ev => {
+  console.log('funBus_h1 clicked  ', funBus_h1);
+  // YES,  this bubbles up ALL the WAY to document !!
+  ev.stopPropagation();   // THIS Stops bubbling
+} );
+*/
+
+// making scroll happen
+const welcome_h2 = document.querySelector('h2'); // should be first h2
+let count_scroll = 0;
+window.addEventListener('scroll', ev => {
+  count_scroll++;
+  console.log('welcome_h2 scolled ', count_scroll);
+  welcome_h2.textContent = `Welcome to Fun Bus! ${count_scroll} scrolls`
+
+});
+
+
+
+
+
+
+
+// STRETCH   Fix for ALL buttons
+
+// funBus_h1.textContent += '';
+const btn = document.querySelector('.btn');
+
+btn.addEventListener('mouseover', e => {
+  console.log(`btn fired a click event!`);
+  // ALL about stopping events from bubbling
+  e.stopPropagation();
+  TweenMax.to(e.currentTarget, 1, {
+    width:150,
+    ease:Bounce.easeOut
+  });
+});
+
+btn.addEventListener('mouseout', e => {
+  console.log(`Work button fired a click event!`);
+  // ALL about stopping events from bubbling
+  e.stopPropagation();
+  TweenMax.to(e.currentTarget, 1, {
+    width:200,
+    ease:Bounce.easeOut
+  });
+});
