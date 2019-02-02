@@ -48,16 +48,19 @@ anchors.forEach(a => {
 
 });
 
+//////  !!!!!!!!!!!!!  ///////////////////////
+// change background  via CLOSURE toggle   !!!
 
-// change background to random 'nice' color OR toggle this!!!
-// NOTE !!!!   closure not working inside ev, going global ;(
+/////////////////////////////////////////////////
+/////////////////        CLOSURES       /////////
+/////////////////////////////////////////////////
 
-
+// toggle
 let toggleClosure = () => {
   let state = true;
 
   function toggleState () {
-    state = !state;
+    state = !state;   // MUST assign before return
     return state;
   }
 
@@ -65,16 +68,25 @@ let toggleClosure = () => {
 };
 
 let toggler = toggleClosure();
-console.log('t first ', toggler());
-console.log('t second', toggler());
+
+// count
+let counterClosure = () => {
+  let count = 0;
+
+  function keepCount () {
+    return count++;
+  }
+
+  return keepCount;
+
+};
+
+let counter = counterClosure();
 
 const body = document.querySelector('body');
-console.log(body);
+console.log('body from querySelector', body);
 
-//   DEBUG CLOSURE - comment this OUT
-// let state = true;
-
-
+// making dblick happen
 body.addEventListener('dblclick',
   ev => {
   console.log('dblclick on document invoked, here is event ', ev);
@@ -92,13 +104,15 @@ body.addEventListener('dblclick',
 
 // making resize happen
 //const funBus_h1 = document.getElementsByTagName('h1');
-let count_resize = 0;
+//let count_resize = 0;
 
 const funBus_h1 = document.querySelector('h1');
 const daWindow = document.querySelector('window');
 
 window.addEventListener('resize', ev => {
-  count_resize++;
+//  count_resize++;    // now doing with counterClosure
+  let count_resize = counter();
+
   console.log(' resize on widow triggered ', daWindow );
   funBus_h1.textContent = `Fun Bus ${count_resize} resizes! `;
   // add setTimeOut to restore as extra STRETCH
@@ -115,11 +129,13 @@ funBus_h1.addEventListener('dblclick', ev => {
 
 // making scroll happen
 const welcome_h2 = document.querySelector('h2'); // should be first h2
-let count_scroll = 0;
+// let count_scroll = 0;
 window.addEventListener('scroll', ev => {
-  count_scroll++;
+//  count_scroll++;
+  let count_scroll = counter();   // now doing with counterClosure
   console.log('welcome_h2 scrolled ', count_scroll);
-  welcome_h2.textContent = `Welcome to Fun Bus! ${count_scroll} scrolls`
+  welcome_h2.textContent = `Welcome to Fun Bus! ${count_scroll} scrolls`;
+  ev.stopPropagation();
 
 });
 
@@ -127,11 +143,11 @@ window.addEventListener('scroll', ev => {
 const letsGo = document.querySelector('.text-content h2');
 console.log('letsGo is ', letsGo);
 window.addEventListener('wheel', ev => {
-  count_scroll++;
-  console.log(`welcome_h2 wheel ${count_scroll} times`);
-  letsGo.textContent = `Welcome to Fun Bus! ${count_scroll} wheels`
-
-
+//  count_scroll++;
+  let count_wheel = counter();
+  console.log(`welcome_h2 wheel ${count_wheel} times`);
+  letsGo.textContent = `Welcome to Fun Bus! ${count_wheel} wheels`;
+  ev.stopPropagation();
 });
 
 //  background restore with a single click
@@ -142,12 +158,42 @@ body.addEventListener('click', ev => {
   body.style.backgroundColor = 'white';
 //  header.style.backgroundColor = 'white';   // interesting stuff here too!
   // alert('back to normal, whew!! ');
+
+  ev.stopPropagation(); // !!!!! single click ALWAYS shows up 2x when doubleclicking
+
+
   });
 
 
-// keydown
-body.addEventListener('keypress', ev => alert('key was pressed'));
+// keypress
+body.addEventListener('keypress', ev =>
+  {
 
+    console.log(`DEPRECATED keypress  ${ev.key}  was pressed`);
+    alert(`DEPRECATED keypress is ${ev.key}  was pressed`);
+
+
+  }
+
+);
+
+
+// keydown
+body_1 =  document.querySelectorAll('body');
+console.log('this is body_1 from querySelectorAll', body_1 );
+
+console.log('body_1[0] is ', body_1[0]);
+
+body_1[0].addEventListener('keydown', ev =>
+  {
+    console.log('this is keydown event currentTarget', ev.currentTarget);
+    console.log(`keydown  key ${ev.key}  was pressed`);
+    console.log('this is ev ', ev);
+    alert(`keydown  key ${ev.key}  was pressed`);
+
+  }
+
+);
 
 // STRETCH   Fix for ALL buttons
 
@@ -178,28 +224,3 @@ buttons.forEach( button => {
 
 
 });
-
-
-/*
-
-btn.addEventListener('mouseover', e => {
-  console.log(`btn fired a click event!`);
-  // ALL about stopping events from bubbling
-  e.stopPropagation();
-  TweenMax.to(e.currentTarget, 1, {
-    width:150,
-    ease:Bounce.easeOut
-  });
-});
-
-btn.addEventListener('mouseout', e => {
-  console.log(`Work button fired a click event!`);
-  // ALL about stopping events from bubbling
-  e.stopPropagation();
-  TweenMax.to(e.currentTarget, 1, {
-    width:200,
-    ease:Bounce.easeOut
-  });
-});
-
-*/
