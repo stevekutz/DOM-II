@@ -52,13 +52,13 @@ anchors.forEach(a => {
 // change background to random 'nice' color OR toggle this!!!
 // NOTE !!!!   closure not working inside ev, going global ;(
 
-/*
+
 let toggleClosure = () => {
   let state = true;
 
   function toggleState () {
     state = !state;
-    return `state is now ${state}`;
+    return state;
   }
 
   return toggleState;
@@ -67,20 +67,26 @@ let toggleClosure = () => {
 let toggler = toggleClosure();
 console.log('t first ', toggler());
 console.log('t second', toggler());
-*/
+
 const body = document.querySelector('body');
 console.log(body);
 
-let state = true;
+//   DEBUG CLOSURE - comment this OUT
+// let state = true;
 
 
 body.addEventListener('dblclick',
   ev => {
   console.log('dblclick on document invoked, here is event ', ev);
-   state ? body.style.backgroundColor = 'yellow'
-               : body.style.backgroundColor = 'pink';
 
-   state = !state;
+    let currState = toggler();
+    console.log('currState is', currState);
+
+    currState ? body.style.backgroundColor = 'yellow'
+      : body.style.backgroundColor = 'pink';
+
+    console.log('currState at END is', currState);
+
   }
 );
 
