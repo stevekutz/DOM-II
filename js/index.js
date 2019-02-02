@@ -8,40 +8,45 @@ console.log(anchors);
 
 // NOTE !!!   TARGETTING CSS  will not impact LESS compiler
 // added class ignored !!!!          INTERESTING !!!!
-/*const nav = document.querySelector('nav');
-
+//    had to manually fix LESS to make nav items stay center
+/*
+const nav = document.querySelector('nav');
 console.log('this is nav  ', nav);
 console.log('this is navClassList ', nav.classList );
 nav.classList.add('align-content');
 nav.setAttribute('align-content', 'center');
 */
 
-// hover effect
+/////////////////////////////////////////////////////////////////
+// hover effect on nav
+////////////////////////////////////////////////////////////////
 const header = document.querySelector('header');
 
-
-// hover effect
 // NOTE !!
 // WOW, interesting behavior on how these fight with each other !!!
-
-
 anchors.forEach(a => {
   a.addEventListener('mouseover',
-    ev => {ev.target.style.color = 'dodgerblue';
-      ev.target.style.fontSize = '3rem'
+    ev => {
+      ev.target.style.color = 'dodgerblue';
+      ev.target.style.fontSize = '3rem';
     }
   );
 
+  // NOTE !!!  see single click
+  // interesting stuff here too when click off page!
   a.addEventListener('focus',
       ev => {header.style.backgroundColor = 'deeppink'}
-    );
-
-  a.addEventListener('mouseleave',
-    ev => {ev.target.style.color = '#212529';
-      ev.target.style.fontSize = '1.6rem'
-  }
   );
 
+  a.addEventListener('mouseleave',
+    ev => {
+      ev.target.style.color = '#212529';
+      ev.target.style.fontSize = '1.6rem';
+    }
+  );
+
+  // NOTE !!!  see single click
+  // interesting stuff here too when click off page!
   a.addEventListener('blur',
     ev => {header.style.backgroundColor = 'grey'}
   );
@@ -52,10 +57,10 @@ anchors.forEach(a => {
 // change background  via CLOSURE toggle   !!!
 
 /////////////////////////////////////////////////
-/////////////////        CLOSURES       /////////
+////            CLOSURES     START   /////////
 /////////////////////////////////////////////////
 
-// toggle
+// toggle  T F
 let toggleClosure = () => {
   let state = true;
 
@@ -66,7 +71,6 @@ let toggleClosure = () => {
 
   return toggleState;
 };
-
 let toggler = toggleClosure();
 
 // count
@@ -80,16 +84,20 @@ let counterClosure = () => {
   return keepCount;
 
 };
-
 let counter = counterClosure();
+
+/////////////////////////////////////////////////
+////            CLOSURES     END   /////////
+//////////////////////////////////////////////////
+
 
 const body = document.querySelector('body');
 console.log('body from querySelector', body);
 
-// making dblick happen
+// making dblclick happen with CLOSURE
 body.addEventListener('dblclick',
   ev => {
-  console.log('dblclick on document invoked, here is event ', ev);
+    console.log('dblclick on document invoked, here is event ', ev);
 
     let currState = toggler();
     console.log('currState is', currState);
@@ -127,7 +135,7 @@ funBus_h1.addEventListener('dblclick', ev => {
 } );
 
 
-// making scroll happen
+// making scroll happen with CLOSURE
 const welcome_h2 = document.querySelector('h2'); // should be first h2
 // let count_scroll = 0;
 window.addEventListener('scroll', ev => {
@@ -139,7 +147,7 @@ window.addEventListener('scroll', ev => {
 
 });
 
-// making wheel happen
+// making wheel happen with CLOSURE
 const letsGo = document.querySelector('.text-content h2');
 console.log('letsGo is ', letsGo);
 window.addEventListener('wheel', ev => {
@@ -150,35 +158,32 @@ window.addEventListener('wheel', ev => {
   ev.stopPropagation();
 });
 
-//  background restore with a single click
-// NOTE !!!    alert breaks this !!!
+// making single click happen //
+//  background color  restore with a single click
+// NOTE !!!    alert breaks dblclick !!!
 body.addEventListener('click', ev => {
   console.log('single click on page');
   // alert('back to normal, whew!! ');
   body.style.backgroundColor = 'white';
-//  header.style.backgroundColor = 'white';   // interesting stuff here too!
-  // alert('back to normal, whew!! ');
+  header.style.backgroundColor = 'white';   // interesting stuff here too when click off page!
+  // alert('back to normal, whew!! ');   // alert breaks doubleclick  !!!
 
-  ev.stopPropagation(); // !!!!! single click ALWAYS shows up 2x when doubleclicking
+  ev.stopPropagation(); // !!!!! single click ALWAYS shows up 2x when double clicking
 
 
   });
 
 
-// keypress
+// making keypress happen - DEPRECATED
 body.addEventListener('keypress', ev =>
   {
-
     console.log(`DEPRECATED keypress  ${ev.key}  was pressed`);
     alert(`DEPRECATED keypress is ${ev.key}  was pressed`);
-
-
   }
-
 );
 
 
-// keydown
+// making keydown happen - added info on which key pressed
 body_1 =  document.querySelectorAll('body');
 console.log('this is body_1 from querySelectorAll', body_1 );
 
@@ -195,9 +200,9 @@ body_1[0].addEventListener('keydown', ev =>
 
 );
 
-// STRETCH   Fix for ALL buttons
-
-// funBus_h1.textContent += '';
+// STRETCH   Fix for ALL buttons done
+// STRETCH extra - play with other kinds of animation
+//   funny MOV of    GreenSock animation with console window   posted to _chat
 const btn = document.querySelector('.btn');
 const buttons = document.querySelectorAll('.btn');
 buttons.forEach( button => {
