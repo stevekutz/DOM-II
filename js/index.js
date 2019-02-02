@@ -90,7 +90,6 @@ let count_resize = 0;
 
 const funBus_h1 = document.querySelector('h1');
 const daWindow = document.querySelector('window');
-console.log('this s funBus', daWindow );
 
 window.addEventListener('resize', ev => {
   count_resize++;
@@ -113,7 +112,7 @@ const welcome_h2 = document.querySelector('h2'); // should be first h2
 let count_scroll = 0;
 window.addEventListener('scroll', ev => {
   count_scroll++;
-  console.log('welcome_h2 scolled ', count_scroll);
+  console.log('welcome_h2 scrolled ', count_scroll);
   welcome_h2.textContent = `Welcome to Fun Bus! ${count_scroll} scrolls`
 
 });
@@ -123,7 +122,7 @@ const letsGo = document.querySelector('.text-content h2');
 console.log('letsGo is ', letsGo);
 window.addEventListener('wheel', ev => {
   count_scroll++;
-  console.log('welcome_h2 scolled ', count_scroll);
+  console.log(`welcome_h2 wheel ${count_scroll} times`);
   letsGo.textContent = `Welcome to Fun Bus! ${count_scroll} wheels`
 
 
@@ -152,7 +151,7 @@ const buttons = document.querySelectorAll('.btn');
 buttons.forEach( button => {
 
   button.addEventListener('mouseover', e => {
-    console.log(`btn fired a click event!`);
+    console.log(`button mouseOVER  fired a click event!`);
     // ALL about stopping events from bubbling
     e.stopPropagation();
     TweenMax.to(e.currentTarget, 1, {
@@ -162,7 +161,7 @@ buttons.forEach( button => {
   });
 
   button.addEventListener('mouseout', e => {
-    console.log(`Work button fired a click event!`);
+    console.log(`button mouseOUT fired a click event!`);
     // ALL about stopping events from bubbling
     e.stopPropagation();
     TweenMax.to(e.currentTarget, 1, {
@@ -173,8 +172,6 @@ buttons.forEach( button => {
 
 
 });
-
-
 
 
 /*
