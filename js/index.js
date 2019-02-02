@@ -148,6 +148,36 @@ body.addEventListener('keypress', ev => alert('key was pressed'));
 
 // funBus_h1.textContent += '';
 const btn = document.querySelector('.btn');
+const buttons = document.querySelectorAll('.btn');
+buttons.forEach( button => {
+
+  button.addEventListener('mouseover', e => {
+    console.log(`btn fired a click event!`);
+    // ALL about stopping events from bubbling
+    e.stopPropagation();
+    TweenMax.to(e.currentTarget, 1, {
+      width:150,
+      ease:Bounce.easeOut
+    });
+  });
+
+  button.addEventListener('mouseout', e => {
+    console.log(`Work button fired a click event!`);
+    // ALL about stopping events from bubbling
+    e.stopPropagation();
+    TweenMax.to(e.currentTarget, 1, {
+      width:200,
+      ease:Bounce.easeOut
+    });
+  });
+
+
+});
+
+
+
+
+/*
 
 btn.addEventListener('mouseover', e => {
   console.log(`btn fired a click event!`);
@@ -168,3 +198,5 @@ btn.addEventListener('mouseout', e => {
     ease:Bounce.easeOut
   });
 });
+
+*/
