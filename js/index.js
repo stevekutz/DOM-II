@@ -6,7 +6,7 @@ console.log(anchors);
 // will add   align-content: center;    to .nav
 //         const nav = document.getElementsByTagName('nav');   // NOT NICE
 
-// NOTE !!!   TARGETTING CSS  will not impact LESS compiler
+// NOTE !!!   TARGETING CSS  will not impact LESS compiler
 // added class ignored !!!!          INTERESTING !!!!
 //    had to manually fix LESS to make nav items stay center
 /*
@@ -95,14 +95,27 @@ const body = document.querySelector('body');
 console.log('body from querySelector', body);
 
 // making dblclick happen with CLOSURE
+// NOTE !!!  something interesting with how toggler()  works
 body.addEventListener('dblclick',
   ev => {
     console.log('dblclick on document invoked, here is event ', ev);
 
     let currState = toggler();
+
     console.log('currState is', currState);
 
-    currState ? body.style.backgroundColor = 'yellow'
+    /*   WORKS in console,
+    if(toggler()) {    // if(toggler() === true) {  // this works     // if(toggler() == true) {
+      console.log('MUST be TRUE');
+    } else {
+      console.log('is false');
+    }
+    */
+   // toggler() ? body.style.backgroundColor = 'yellow'           // DOES not toggle
+   // toggler() == true ? body.style.backgroundColor = 'yellow'   // DOES not toggle
+   // toggler() == true ? body.style.backgroundColor = 'yellow'   // DOES not toggle
+
+    currState ? body.style.backgroundColor = 'yellow'    // toggler WORKS !!!
       : body.style.backgroundColor = 'pink';
 
     console.log('currState at END is', currState);
