@@ -203,6 +203,8 @@ img {
   width: 350px;
   display: flex;
   justify-content: space-evenly;
+  align-content: center;
+  align-items: center;
 }
 @media (max-width: 500px) {
   .main-navigation .nav-container .nav {
